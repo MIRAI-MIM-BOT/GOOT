@@ -110,7 +110,7 @@ module.exports = {
         + `║ 💬 Chatbox : ${threadPrefix}\n`
         + `║ ➤ ${threadPrefix}help to see all available cmds 🥵\n`
         + "╚═══════════════╝",
-        attachment: await utils.getStreamFromURL("https://files.catbox.moe/j2fecp.jpg")
+        attachment: await utils.getStreamFromURL("https://files.catbox.moe/uk1l30.jpg")
       });
     }
   }
