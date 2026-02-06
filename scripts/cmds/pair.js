@@ -1,55 +1,67 @@
-const axios = require ("axios");
-const fs = require ("fs-extra");
+const axios = require("axios");
 
 module.exports = {
-  config: {
-    name: "pair",
-    aliases: [],
-    version: "1.0",
-    author: "nexo_here",
-    countDown: 5,
-    role: 0,
-    shortDescription: " ",
-    longDescription: "",
-    category: "fun",
-    guide: "{pn}"
-  },
+  name: "pair",
+  aliases: ["autopair"],
+  description: "Boy Girl auto pair with image",
+  cooldown: 15,
 
-  onStart: async function({ api, event, threadsData, usersData }) {
+  run: async ({ api, event }) => {
+    const { threadID, messageID } = event;
 
-    const { threadID, messageID, senderID } = event;
-    const { participantIDs } = await api.getThreadInfo(threadID);
-    var tle = Math.floor(Math.random() * 101);
-    var namee = (await usersData.get(senderID)).name
-    const botID = api.getCurrentUserID();
-    const listUserID = participantIDs.filter(ID => ID != botID && ID != senderID);
-    var id = listUserID[Math.floor(Math.random() * listUserID.length)];
-    var name = (await usersData.get(id)).name
-    var arraytag = [];
-    arraytag.push({ id: senderID, tag: namee });
-    arraytag.push({ id: id, tag: name });
+    try {
+      const threadInfo = await api.getThreadInfo(threadID);
+      const ids = threadInfo.participantIDs;
 
-    let Avatar = (await axios.get(`https://graph.facebook.com/${senderID}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: "arraybuffer" })).data;
-    fs.writeFileSync(__dirname + "/cache/avt.png", Buffer.from(Avatar, "utf-8"));
+      if (ids.length < 2) {
+        return api.sendMessage("❌ Pair করার মতো member নেই", threadID, messageID);
+      }
 
-    let gifLove = (await axios.get(`https://i.ibb.co/y4dWfQq/image.gif`, { responseType: "arraybuffer" })).data;
-    fs.writeFileSync(__dirname + "/cache/giflove.png", Buffer.from(gifLove, "utf-8"));
+      const users = await api.getUserInfo(ids);
+      const boys = [];
+      const girls = [];
 
-    let Avatar2 = (await axios.get(`https://graph.facebook.com/${id}/picture?width=512&height=512&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: "arraybuffer" })).data;
-    fs.writeFileSync(__dirname + "/cache/avt2.png", Buffer.from(Avatar2, "utf-8"));
+      for (const id in users) {
+        if (users[id].gender === 2) boys.push(id);   // 👦 male
+        if (users[id].gender === 1) girls.push(id);  // 👧 female
+      }
 
-    var imglove = [];
+      if (boys.length === 0 || girls.length === 0) {
+        return api.sendMessage(
+          "❌ Boy / Girl detect করা যায়নি",
+          threadID,
+          messageID
+        );
+      }
 
-    imglove.push(fs.createReadStream(__dirname + "/cache/avt.png"));
-    imglove.push(fs.createReadStream(__dirname + "/cache/giflove.png"));
-    imglove.push(fs.createReadStream(__dirname + "/cache/avt2.png"));
+      const boy = boys[Math.floor(Math.random() * boys.length)];
+      const girl = girls[Math.floor(Math.random() * girls.length)];
 
-    var msg = {
-      body: `🥰Successful pairing!\n💌Wish you two hundred years of happiness\n💕Double ratio: ${tle}%\n${namee} 💓 ${name}`,
-      mentions: arraytag,
-      attachment: imglove
-    };
+      // ✅ তোমার দেওয়া image link
+      const imageURL = "https://i.imgur.com/xipCvL0.jpeg";
 
-    return api.sendMessage(msg, event.threadID, event.messageID);
+      const img = (await axios.get(imageURL, {
+        responseType: "stream"
+      })).data;
+
+      return api.sendMessage(
+        {
+          body:
+            "💞 your love 💞\n\n" +
+            `👦 @${boy}\n` +
+            `👧 @${girl}\n\n` +
+            "🔥 Perfect Match 🔥",
+          attachment: img,
+          mentions: [
+            { tag: `@${boy}`, id: boy },
+            { tag: `@${girl}`, id: girl }
+          ]
+        },
+        threadID,
+        messageID
+      );
+    } catch (err) {
+      api.sendMessage("❌ Pair error", threadID, messageID);
+    }
   }
 };
