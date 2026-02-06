@@ -31,7 +31,7 @@ module.exports = {
         user.gender == 2 ? "Male" : "Unknown";
 
       return message.reply(
-`📘 FACEBOOK USER INFO
+`📘 INFO
 
 👤 Name: ${user.name || "Unknown"}
 🆔 UID: ${uid}
@@ -39,7 +39,7 @@ module.exports = {
 🚻 Gender: ${gender}
 🔗 Profile: https://facebook.com/${uid}
 
-🔵▄̽𓆩𝗥𝗮𝗳𝗶⚔︎ 𝗖꯭𝗵𝗮𝘁⚔︎ 𝗕𝗼𝘁⚔🔵`
+✰𝙍𝘼𝙁𝙄☆𝘾𝙃𝘼𝙏☆𝘽𝙊𝙏✰`
       );
 
     } catch (err) {
