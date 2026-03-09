@@ -91,7 +91,7 @@ module.exports = {
                     `━━━━━━━━━━━━━━━━\n` +
                     `📊 Status: ${statusText}\n` +
                     `━━━━━━━━━━━━━━━━\n` +
-                    `⚡ Powered by akashx404\n` +
+                    `⚡ Powered by Farhan\n` +
                     `━━━━━━━━━━━━━━━━`;
                 
                 // Edit the loading message with result
