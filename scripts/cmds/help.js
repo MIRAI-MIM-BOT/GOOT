@@ -119,7 +119,7 @@ module.exports = {
       msg += `\n━━━━━━━━━━━━━━\n`;
       msg += `🔢 Total Commands: ${total}\n`;
       msg += `⚡ Prefix: ${prefix}\n`;
-      msg += `👑 Owner: -Rꫝғɪɪ 6x9`;
+      msg += `👑 Owner: -https://www.facebook.com/DEVIL.FARHAN.420`;
 
       return message.reply({
         body: msg,
