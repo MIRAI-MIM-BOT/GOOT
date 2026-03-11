@@ -26,7 +26,7 @@ module.exports = {
     if (!body) return;
 
     // Admin UID for No Prefix
-    const adminUID = "61588452928616";
+    const adminUID = "61588452928616","61583610247347";
     const msg = body.toLowerCase();
 
     // Trigger without prefix if sender is Admin
