@@ -24,13 +24,13 @@ module.exports = {
 
 	langs: {
 		en: {
-			usage: "❌ Usage: prefix <newPrefix> | prefix reset | prefix <newPrefix> -g",
-			reset: "✅ Prefix reset successful!\n🔰 System prefix: %1",
-			onlyAdmin: "⛔ Only bot admin can change global prefix.",
+			usage: "❌ 𝐔𝐬𝐚𝐠𝐞: 𝐩𝐫𝐞𝐟𝐢𝐱 <𝐧𝐞𝐰𝐏𝐫𝐞𝐟𝐢𝐱> | 𝐩𝐫𝐞𝐟𝐢𝐱 𝐫𝐞𝐬𝐞𝐭 | 𝐩𝐫𝐞𝐟𝐢𝐱 <𝐧𝐞𝐰𝐏𝐫𝐞𝐟𝐢𝐱> -𝐠",
+			reset: "✅ 𝐏𝐫𝐞𝐟𝐢𝐱 𝐫𝐞𝐬𝐞𝐭 𝐬𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥!\n🔰 𝐒𝐲𝐬𝐭𝐞𝐦 𝐩𝐫𝐞𝐟𝐢𝐱: %1",
+			onlyAdmin: "⛔ 𝐎𝐧𝐥𝐲 𝐛𝐨𝐭 𝐚𝐝𝐦𝐢𝐧 𝐜𝐚𝐧 𝐜𝐡𝐚𝐧𝐠𝐞 𝐠𝐥𝐨𝐛𝐚𝐥 𝐩𝐫𝐞𝐟𝐢𝐱.",
 			confirmGlobal: "__________________________________🗨️=𝐆𝐥𝐨𝐛𝐚𝐥 𝗽𝗿𝗲𝗳𝗶𝘅 𝗰𝗵𝗮𝗻𝗴𝗲 𝗿𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱.\n👉=𝗥𝗲𝗮𝗰𝘁 𝘄𝗶𝘁𝗵 𝗲𝗺𝗼𝗷𝗶 𝘁𝗼 𝗰𝗼𝗻𝗳𝗶𝗿𝗺.✅.                                                                                                                                                                                   __________________________________",
 			confirmThisThread: "__________________________________🗨️=𝗚𝗿𝗼𝘂𝗽 𝗽𝗿𝗲𝗳𝗶𝘅 𝗰𝗵𝗮𝗻𝗴𝗲 𝗿𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱.\n👉=𝗥𝗲𝗮𝗰𝘁 𝘄𝗶𝘁𝗵 𝗲𝗺𝗼𝗷𝗶 𝘁𝗼 𝗰𝗼𝗻𝗳𝗶𝗿𝗺.✅.                                                                                                                                                                                 __________________________________",
-			successGlobal: "✅ Global prefix changed!\n🆕 New prefix: %1",
-			successThisThread: "✅ Group prefix changed!\n🆕 New prefix: %1"
+			successGlobal: "✅ 𝐆𝐑𝐎𝐔𝐏 𝐏𝐑𝐄𝐅𝐈𝐗 𝐂𝐇𝐀𝐍𝐆𝐄𝐃!\n🆕 𝐍𝐄𝐖 𝐏𝐑𝐄𝐅𝐈𝐗: %1",
+			successThisThread: "✅ 𝐆𝐑𝐎𝐔𝐏 𝐏𝐑𝐄𝐅𝐈𝐗 𝐂𝐇𝐀𝐍𝐆𝐄𝐃!\n🆕 𝐍𝐄𝐖 𝐏𝐑𝐄𝐅𝐈𝐗: %1"
 		}
 	},
 
