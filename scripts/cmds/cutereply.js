@@ -32,7 +32,7 @@ const TRIGGERS = [
     text: "-আমাকে মেনশন দিয়ে লাভ নাই- কারণ আমি একটা মেসেঞ্জার চ্যাট রোবট,🤖 আমাকে বানানো হয়েছে শুধুমাত্র আপনাদেরকে বিনোদনের জন্য, আমাকে বানিয়েছেন আমার বস ফারহান-😽🫶 [https://www.facebook.com/DEVIL.FARHAN.420,!🌺",
     images: [
       "https://i.imgur.com/rkrXNso.jpeg",
-      "https://i.imgur.com/zrpFJUc.jpeg",
+      "https://i.imgur.com/zrpFJUc.jpeg"
     ]
   }
 ];
