@@ -1,108 +1,165 @@
-const fs = require("fs-extra");
-const axios = require("axios");
-const path = require("path");
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = {
   config: {
     name: "info",
-    version: "1.5.0",
-    author: "FARHAN",
+    author: "Farhan",
     role: 0,
-    shortDescription: "Owner information with dynamic Facebook profile picture",
-    category: "Information",
-    guide: { en: "info" }
+    shortDescription: "Shows bot and owner info",
+    longDescription: "Sends bot stats along with a random image",
+    category: "admin",
+    guide: "{pn}"
   },
 
-  onStart: async function ({ api, event }) {
-    // --- Owner Info Text ---
-    const ownerText = `╔════•|      ✿      |•════╗
-💐আ্ঁস্ঁসা্ঁলা্ঁমু্ঁ💚আ্ঁলা্ঁই্ঁকু্ঁম্ঁ💐
-╚════•|      ✿      |•════╝
-__________________________________
-🌺❀ 𝐁𝐎𝐓_ 𝐈𝐍𝐅𝐎_𝐑𝐌𝐀𝐓𝐈𝐎𝐍 ❀🌺
-__________________________________
-
-💠𝐁𝐎𝐓 𝐍𝐀𝐌𝐄💠 :
-
-─꯭𓆩»̶̶͓͓͓̽̽̽𝆠꯭፝֟𝐒𝐈𝐙𝐔𝐊𝐀𝆠꯭፝֟𓆩𝆠፝𝐁𝐀𝐁𝐘𝆠꯭፝֟𝆠꯭፝֟𓆪🐱🩵🪽
-
-🌼𝐁𝐎𝐓 𝐀𝐃𝐌𝐈𝐍🌼:『𝐑𝐉-𝐅𝐀𝐑𝐇𝐀𝐍』
-
-🔥𝐁𝐈𝐎 𝐀𝐃𝐌𝐈𝐍🔥 : [ ⊱༅༎😽💚༅༎⊱
-
-
--আমি ভদ্র, বেয়াদব দুটোই🥱✌️
-
--তুমি যেটা ডি'জার্ভ করো, আমি সেটাই দেখাবো!🙂
-
-
-⊱༅༎😽💚༅༎⊱ ]
-
-🏠𝐀𝐃𝐃𝐑𝐄𝐒𝐒🏠 :[𝐂𝐇𝐔𝐀𝐃𝐀𝐍𝐆𝐀]
-              [𝐁𝐀𝐍𝐆𝐋𝐀𝐃𝐄𝐒𝐇] 
-
-🌺𝐑𝐄𝐋𝐈𝐆𝐈𝐎𝐍🌺 :[𝐈𝐒𝐋𝐀𝐌]
-
-💮𝐆𝐄𝐍𝐃𝐄𝐑💮  :[𝐌𝐀𝐋𝐄]
-
-🌸𝐑𝐄𝐋𝐀𝐓𝐈𝐎𝐍𝐒𝐇𝐈𝐏🌸 :[𝐒𝐈𝐍𝐆𝐋𝐄]
-
-🌼𝐖𝐎𝐑𝐊🌼 :[𝐉𝐎𝐁]
-
-🌷𝐖𝐇𝐀𝐓'𝐒 𝐀𝐏𝐏🌷:[𝟎𝟏𝟗𝟑𝟒𝟔𝟒𝟎𝟎𝟔𝟏]
-
-_________🅲🅾🅽🆃🅰🅲🆃_________
-
-💥𝐅𝐀𝐂𝐄𝐁𝐎𝐎𝐊 𝐈𝐃 (❶)💥 : https://www.facebook.com/DARK.XAIKO.420
-
-💥𝐅𝐀𝐂𝐄𝐁𝐎𝐎𝐊 𝐈𝐃 (❷)💥 : https://www.facebook.com/DEVIL.FARHAN.420
-______________________________
-☄️>𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 :-  { / } 
-
-👑>𝐎𝐖𝐍𝐄𝐑 :-(𝐌𝐑.𝐅𝐀𝐑𝐇𝐀𝐍)
-______________________________
-
-𝐓𝐘𝐏𝐄 /𝐀𝐃𝐌𝐈𝐍:-♻️➟𝐔𝐏𝐓𝐈𝐌𝐄 ♻️
-
-『💚 𝐓𝐇𝐀𝐍𝐊𝐒 𝐅𝐎𝐑 𝐔𝐒𝐈𝐍𝐆 💚』
--------------+++++++++++++-------------`;
-
-    const cacheDir = path.join(__dirname, "cache");
-    const fbUserID = "61583610247347"; // Change to your Facebook user ID
-    const imgPath = path.join(cacheDir, `${fbUserID}.png`);
-
+  onStart: async function ({ api, event, prefix, commands }) {
     try {
-      await fs.ensureDir(cacheDir);
+      prefix = prefix || "/";
+      commands = commands || new Map();
 
-      // Remove old file if exists
-      if (await fs.pathExists(imgPath)) {
-        await fs.remove(imgPath);
+      // --- Step 1: Send initial loading message ---
+      const loadingMsgText = `
+🌸━━━━━━━━━━━━━━🌸
+   ⏳>ʟᴏᴀᴅɪɴɢ ʙᴏᴛ ꜱᴛᴀᴛꜱ...
+          ᴘʟᴇᴀꜱᴇ ᴡᴀɪᴛ...
+🌸━━━━━━━━━━━━━━🌸
+`;
+      const loadingMsg = await api.sendMessage(loadingMsgText, event.threadID, event.messageID);
+
+      // --- Step 2: Gather stats asynchronously ---
+      let totalUsers = 0, totalThreads = 0;
+      try {
+        const threads = await api.getThreadList(100, null, []);
+        totalThreads = threads.length;
+        totalUsers = threads.reduce((sum, t) => sum + (t.participantIDs?.length || 0), 0);
+      } catch (err) {
+        console.log("Could not fetch threads/users:", err.message);
       }
 
-      // Download Facebook profile picture dynamically
-      const fbURL = `https://graph.facebook.com/${fbUserID}/picture?height=720&width=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`;
-      const response = await axios({ method: "GET", url: fbURL, responseType: "stream" });
+      // --- Uptime calculation ---
+      const uptimeSec = process.uptime();
+      const hoursUp = Math.floor(uptimeSec / 3600);
+      const minutesUp = Math.floor((uptimeSec % 3600) / 60);
+      const secondsUp = Math.floor(uptimeSec % 60);
 
-      const writer = fs.createWriteStream(imgPath);
-      response.data.pipe(writer);
+      // --- Bangladesh time ---
+      const nowUTC = new Date();
+      const nowBangladesh = new Date(nowUTC.getTime() + 6 * 60 * 60 * 1000);
+      let hours = nowBangladesh.getHours();
+      const minutes = nowBangladesh.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      const minutesStr = minutes.toString().padStart(2, '0');
+      const time = `${hours}:${minutesStr} ${ampm}`;
 
-      // Wait until image is fully written
-      await new Promise((resolve, reject) => {
-        writer.on("finish", resolve);
-        writer.on("error", reject);
-      });
+      // --- Random image selection ---
+      const imgLinks = [
+        "https://files.catbox.moe/7fy6p9.jpg",
+        "https://files.catbox.moe/p1tlz2.jpg",
+        "https://files.catbox.moe/as641j.jpg"
+      ];
+      const randomImage = imgLinks[Math.floor(Math.random() * imgLinks.length)];
+      const tmpPath = path.join(__dirname, `temp_image_${Date.now()}.jpg`);
 
-      // Send message with image attachment
-      api.sendMessage(
-        { body: ownerText, attachment: fs.createReadStream(imgPath) },
-        event.threadID,
-        () => fs.remove(imgPath), // Cleanup after sending
-        event.messageID
-      );
+      // --- Step 3: Download image using streaming ---
+      try {
+        const writer = fs.createWriteStream(tmpPath);
+        const response = await axios({
+          url: randomImage,
+          method: 'GET',
+          responseType: 'stream'
+        });
+        response.data.pipe(writer);
+
+        await new Promise((resolve, reject) => {
+          writer.on('finish', resolve);
+          writer.on('error', reject);
+        });
+      } catch (err) {
+        console.log("Failed to download image:", err.message);
+      }
+
+      // --- Step 4: Prepare full message ---
+      const fullMessage = `‎⋆✦⋆⎯⎯⎯⎯⎯⎯⎯⎯⎯⋆✦⋆
+‎    ╭•┄┅══❁🌺❁══┅┄•╮
+‎•—»✨𝗢𝗪𝗡𝗘𝗥 𝗜𝗡𝗙𝗢✨«—•
+‎    ╰•┄┅══❁🌺❁══┅┄•╯
+‎⋆✦⋆⎯⎯⎯⎯⎯⎯⎯⎯⎯⋆✦⋆
+‎╔══════════════════╗
+‎║[𝗢𝗪𝗡𝗘𝗥:-[𝗙𝗔𝗥𝗛𝗔𝗡-𝗞𝗛𝗔𝗡] ║
+‎║
+‎║🤖>𝗕𝗢𝗧-𝗡𝗔𝗠𝗘:-[>𝗦𝗜𝗭𝗨𝗞𝗔<]
+╠══════════════════╣
+‎║♻️>𝗥𝗲𝗹𝗶𝗴𝗶𝗼𝗻:- [>𝗜𝘀𝗹𝗮𝗺<]
+‎║ 
+‎║📝>𝗔𝗴𝗲:-  [>𝟮𝟬<]
+‎║
+‎║🚻>𝗚𝗲𝗻𝗱𝗲𝗿:-  [>𝗠𝗮𝗹𝗲<]
+‎‎╠══════════════════╣
+‎║🌐>𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸:-↓facebook.com/
+‎║                     DEVIL.FARHAN.420                              
+‎║
+‎║💬>𝗠𝗲𝘀𝘀𝗲𝗻𝗴𝗲𝗿:-↓
+‎║ [>m.me/DARK.XAIKO.420<]
+‎║
+‎║📞>𝗪𝗵𝗮𝘁𝘀𝗔𝗽𝗽:-↓
+‎║ [>wa.me/+8801934640061<]        
+‎║
+‎╠══════════════════╣
+‎║🤖>𝗕𝗢𝗧-𝗡𝗔𝗠𝗘:-𝗦𝗜𝗭𝗨𝗞𝗔-𝗕𝗢𝗧
+‎║
+‎║⚡>𝗣𝗿𝗲𝗳𝗶𝘅:- ${prefix}
+‎║
+‎║📦>𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀:- ${commands.size}
+‎║
+‎║🚀>𝗣𝗶𝗻𝗴:- N/A
+‎╠══════════════════╣
+‎║
+‎║⏳>𝗨𝗽𝘁𝗶𝗺𝗲:- ${hoursUp}h ${minutesUp}m ${secondsUp}s
+‎║
+‎║🕒>𝗕𝗱→𝗧𝗶𝗺𝗲:- ${time}
+‎║
+‎╠══════════════════╣
+‎║🏠>𝐀𝐃𝐃𝐑𝐄𝐒𝐒:-[𝐂𝐇𝐔𝐀𝐃𝐀𝐍𝐆𝐀]
+‎║             [𝐁𝐀𝐍𝐆𝐋𝐀𝐃𝐄𝐒𝐇]
+‎║
+‎║👩‍❤️‍👨↓
+║ >𝐑𝐄𝐋𝐀𝐓𝐈𝐎𝐍𝐒𝐇𝐈𝐏:-[>𝐒𝐈𝐍𝐆𝐋𝐄<]
+‎║
+‎║🧑‍🔧>𝐖𝐎𝐑𝐊:- [>𝐉𝐎𝐁<]
+‎╠══════════════════╣
+‎║
+‎⊱༅༎😽💚༅༎⊱ ]
+‎-আমি ভদ্র, বেয়াদব দুটোই🥱✌️
+‎
+‎-তুমি যেটা ডি'জার্ভ করো, আমি সেটাই দেখাবো! 
+⊱༅༎😽💚༅༎⊱ ]
+‎║
+‎╠══════════════════╣
+  ‎♡𝗧𝗛𝗔𝗡𝗞𝗦 𝗙𝗢𝗥 𝗨𝗦𝗜𝗡𝗚 𝗠𝗬♡
+             ♡𝗦𝗜𝗭𝗨𝗞𝗔>𝗕𝗢𝗧♡
+‎╚══════════════════╝`;
+
+      // --- Step 5: Send full message with image ---
+      if (fs.existsSync(tmpPath)) {
+        await api.sendMessage(
+          { body: fullMessage, attachment: fs.createReadStream(tmpPath) },
+          event.threadID
+        );
+        await fs.promises.unlink(tmpPath);
+      } else {
+        await api.sendMessage(fullMessage, event.threadID);
+      }
+
+      // --- Step 6: Delete loading message ---
+      if (loadingMsg?.messageID) {
+        await api.deleteMessage(loadingMsg.threadID, loadingMsg.messageID);
+      }
 
     } catch (err) {
-      console.error("❌ Error sending owner info:", err);
-      api.sendMessage(ownerText, event.threadID, event.messageID); // fallback: send text only
+      console.error(err);
+      await api.sendMessage('An error occurred while sending info.', event.threadID);
     }
   }
 };
