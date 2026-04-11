@@ -4,7 +4,7 @@ module.exports = {
   config: {
     name: "tik",
     version: "2.0",
-    author: "SouRav Ahmed",
+    author: "MR_FARHAN",
     countDown: 5,
     role: 0,
     shortDescription: "TikTok Pro Search",
