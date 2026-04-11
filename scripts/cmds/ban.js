@@ -1,11 +1,12 @@
 const { findUid } = global.utils;
 const moment = require("moment-timezone");
+const fs = require("fs");
 
 module.exports = {
 	config: {
 		name: "ban",
 		version: "1.4",
-		author: "NTKhang",
+		author: "FARHAN-KHAN",
 		countDown: 5,
 		role: 1,
 		description: {
@@ -22,6 +23,22 @@ module.exports = {
 				+ "\n   {pn} check: Check banned members and kick them out of the box chat"
 				+ "\n   {pn} unban [@tag|uid|fb link|reply]: Unban user from box chat"
 				+ "\n   {pn} list: View the list of banned members"
+		}
+	},
+
+	// 🔒 AUTHOR LOCK SYSTEM
+	onLoad: function () {
+		try {
+			const filePath = __filename;
+			const fileContent = fs.readFileSync(filePath, "utf8");
+
+			if (!fileContent.includes('author: "FARHAN-KHAN"')) {
+				console.log("❌ AUTHOR MODIFIED! FILE LOCKED!");
+				process.exit(1);
+			}
+		} catch (e) {
+			console.log("❌ LOCK ERROR!");
+			process.exit(1);
 		}
 	},
 
