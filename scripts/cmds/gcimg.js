@@ -26,7 +26,7 @@ module.exports = {
     name: "gcimg",
     aliases: ["gcimage", "grpimage"],
     version: "1.1",
-    author: "nexo_here",
+    author: "FARHAN-KHAN",
     countDown: 5,
     role: 0,
     description: "Generate a styled group image with profile pictures",
