@@ -2,7 +2,7 @@ module.exports = {
   config: {
     name: "out",
     version: "2.0",
-    author: "MOHAMMAD AKASH",
+    author: "FARHAN-KHAN",
     countDown: 5,
     role: 2,
     shortDescription: "বটকে গ্রুপ থেকে বের করে দেওয়া",
